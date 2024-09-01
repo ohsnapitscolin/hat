@@ -1,6 +1,7 @@
 import { useCollection, useQuery, useQueue, useSquid } from "@squidcloud/react";
-import Hat from "@/pages/hat";
 import Button from "@/pages/components/Button";
+import useWindowSize from "react-use/lib/useWindowSize";
+import Confetti from "react-confetti";
 
 type PropTypes = {
   name: string;
@@ -17,6 +18,8 @@ const Draw = ({ name }: PropTypes) => {
   }>(squid.queue("messages"));
   const collection = useCollection("hat");
   const { data, loading } = useQuery(collection.query());
+
+  const { width, height } = useWindowSize();
 
   const draw = async () => {
     void squid.executeFunction("drawFromHat");
@@ -56,6 +59,7 @@ const Draw = ({ name }: PropTypes) => {
           <span style={{ color: text }}>Remaining: {data.length}</span>
         </>
       )}
+      {!data.length && message && <Confetti width={width} height={height} />}
     </div>
   );
 };
