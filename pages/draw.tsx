@@ -3,11 +3,7 @@ import Button from "@/pages/components/Button";
 import useWindowSize from "react-use/lib/useWindowSize";
 import Confetti from "react-confetti";
 
-type PropTypes = {
-  name: string;
-};
-
-const Draw = ({ name }: PropTypes) => {
+const Draw = () => {
   const squid = useSquid();
   const { data: message } = useQueue<{
     text: string;
@@ -37,11 +33,6 @@ const Draw = ({ name }: PropTypes) => {
       }}
     >
       {!!message && (
-        <span className={"text-3xl"} style={{ color: text }}>
-          {message.name}
-        </span>
-      )}
-      {!!message && (
         <span className={"text-8xl"} style={{ color: text }}>
           {message?.location}
         </span>
@@ -65,9 +56,3 @@ const Draw = ({ name }: PropTypes) => {
 };
 
 export default Draw;
-
-Draw.getInitialProps = async () => {
-  const name =
-    typeof window !== "undefined" ? window.sessionStorage.getItem("name") : "";
-  return { name };
-};

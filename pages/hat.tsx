@@ -4,6 +4,7 @@ import { Controller, useForm } from "react-hook-form";
 import { useCollection, useQuery } from "@squidcloud/react";
 import ColorPicker from "@/pages/components/ColorPicker";
 import Button from "@/pages/components/Button";
+import { getRandomColor } from "@/pages/utils";
 
 type PropTypes = {
   name: string;
@@ -31,7 +32,12 @@ const Hat = ({ name }: PropTypes) => {
     if (!location) return;
 
     void collection.doc({ name, location }).insert({ text, bg1, bg2 });
-    reset({ location: "", text: "#000000", bg1: "#ffffff", bg2: "#ffffff" });
+    reset({
+      location: "",
+      text: "#ffffff",
+      bg1: getRandomColor(),
+      bg2: getRandomColor(),
+    });
   };
 
   const remove = (id: string) => {
@@ -68,7 +74,7 @@ const Hat = ({ name }: PropTypes) => {
               {...register("location")}
             />
             <label className="mb-6 text-sm" style={{ color: colors[0] }}>
-              Your Location
+              Vacation Location
             </label>
 
             <div className="flex justify-center gap-2 mb-2">
@@ -78,7 +84,7 @@ const Hat = ({ name }: PropTypes) => {
                 render={({ field: { onChange, value } }) => (
                   <ColorPicker color={value} onChange={onChange} />
                 )}
-                defaultValue={"#000000"}
+                defaultValue={"#ffffff"}
               />
               <Controller
                 control={control}
@@ -86,7 +92,7 @@ const Hat = ({ name }: PropTypes) => {
                 render={({ field: { onChange, value } }) => (
                   <ColorPicker color={value} onChange={onChange} />
                 )}
-                defaultValue={"#ffffff"}
+                defaultValue={getRandomColor()}
               />
               <Controller
                 control={control}
@@ -94,7 +100,7 @@ const Hat = ({ name }: PropTypes) => {
                 render={({ field: { onChange, value } }) => (
                   <ColorPicker color={value} onChange={onChange} />
                 )}
-                defaultValue={"#ffffff"}
+                defaultValue={getRandomColor()}
               />
             </div>
             <Button
@@ -103,22 +109,20 @@ const Hat = ({ name }: PropTypes) => {
               color={colors[0]}
               backgroundColor={colors[1]}
             >
-              Submit
+              Add to Hat
             </Button>
           </form>
         ) : (
-          <Button onClick={() => router.push("/draw")} className="mb-12">
-            Ready
-          </Button>
+          <Button onClick={() => router.push("/draw")}>Ready</Button>
         )}
         {!!data.length && (
-          <div className="flex flex-col gap-4 items-center">
+          <div className="flex flex-col gap-4 items-center mt-12">
             {data.map((d) => {
               const { __id, location, text, bg1, bg2 } = d.data;
               return (
                 <div
                   key={d.refId}
-                  className="flex items-center p-4 rounded-3xl border"
+                  className="flex items-center p-4 rounded-3xl"
                   style={{
                     background: `linear-gradient(to right, ${bg1}, ${bg2})`,
                   }}

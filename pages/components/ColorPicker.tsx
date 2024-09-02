@@ -33,7 +33,7 @@ const ColorPicker = ({ color, onChange }: PropTypes) => {
       </Modal>
       <button
         type="button"
-        className="w-5 h-5 border rounded-full"
+        className="w-5 h-5 border rounded"
         onClick={() => setOpen(true)}
         style={{ backgroundColor: color }}
       />
