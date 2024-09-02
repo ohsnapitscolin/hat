@@ -39,11 +39,11 @@ const Home = () => {
       >
         <input
           className={
-            "max-w-[80%] h-16 text-4xl text-center px-4 mb-1 border-b-2 bg-transparent outline-none border-black"
+            "w-[320px text-center px-4 mb-1 border-b bg-transparent outline-none border-black"
           }
           {...register("name")}
         />
-        <label className="mb-10 text-sm">Your Name</label>
+        <label className="mb-10 text">Your Name</label>
         <Button type="submit">Enter</Button>
       </form>
     </div>

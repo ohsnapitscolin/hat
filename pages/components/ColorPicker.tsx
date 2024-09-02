@@ -1,6 +1,6 @@
 import { HexColorPicker } from "react-colorful";
-import Modal from "react-modal";
 import { useState } from "react";
+import Modal from "react-modal";
 
 type PropTypes = {
   color: string;
@@ -36,7 +36,7 @@ const ColorPicker = ({ color, onChange }: PropTypes) => {
       </Modal>
       <button
         type="button"
-        className="w-5 h-5 border rounded"
+        className="relative w-5 h-5 border"
         onClick={() => setOpen(true)}
         style={{ backgroundColor: color }}
       />

@@ -24,14 +24,16 @@ const Hat = ({ name }: PropTypes) => {
 
   const colors = watch(["text", "bg1", "bg2"]);
 
-  const collection = useCollection("hat");
-  const { data } = useQuery(collection.query().eq("name", name));
+  const hatCollection = useCollection("hat");
+  const pickCollection = useCollection("picks");
+  const { data } = useQuery(hatCollection.query().eq("name", name));
 
   const onSubmit = async (data: FormData) => {
     const { location, text, bg1, bg2 } = data;
     if (!location) return;
 
-    void collection.doc({ name, location }).insert({ text, bg1, bg2 });
+    void hatCollection.doc({ name, location }).insert({ text, bg1, bg2 });
+    void pickCollection.doc("pick").delete();
     reset({
       location: "",
       text: "#ffffff",
@@ -41,7 +43,7 @@ const Hat = ({ name }: PropTypes) => {
   };
 
   const remove = (id: string) => {
-    void collection.doc(id).delete();
+    void hatCollection.doc(id).delete();
   };
 
   useEffect(() => {
@@ -57,23 +59,23 @@ const Hat = ({ name }: PropTypes) => {
         background: `linear-gradient(to bottom, ${colors[1]}, ${colors[2]})`,
       }}
     >
-      <h1 className="mt-16 text-3xl" style={{ color: colors[0] }}>
-        Welcome {name}
+      <h1 className="mt-16" style={{ color: colors[0] }}>
+        Hi {name}
       </h1>
-      <div className="flex flex-col grow-1 h-full justify-center items-center">
+      <div className="w-full flex flex-col grow-1 h-full justify-center items-center">
         {data.length < 2 ? (
           <form
             onSubmit={handleSubmit(onSubmit)}
-            className="mb-12 flex flex-col justify-center items-center"
+            className="mb-12 w-full flex flex-col justify-center items-center"
           >
             <input
               className={
-                "max-w-[80%] h-16 text-4xl text-center px-4 mb-1 border-b-2 bg-transparent outline-none"
+                "w-[320px] text-center px-4 py-1 mb-1 border-b bg-transparent outline-none"
               }
               style={{ color: colors[0], borderColor: colors[0] }}
               {...register("location")}
             />
-            <label className="mb-6 text-sm" style={{ color: colors[0] }}>
+            <label className="mb-6 text" style={{ color: colors[0] }}>
               Vacation Location
             </label>
 
@@ -122,16 +124,14 @@ const Hat = ({ name }: PropTypes) => {
               return (
                 <div
                   key={d.refId}
-                  className="flex items-center p-4 rounded-3xl"
+                  className="w-[320px] relative overflow-hidden flex items-center px-5 p-3 rounded"
                   style={{
                     background: `linear-gradient(to right, ${bg1}, ${bg2})`,
                   }}
                 >
-                  <span style={{ color: text }} className="font-semibold">
-                    {location}
-                  </span>
+                  <span style={{ color: text }}>{location}</span>
                   <button
-                    className="ml-16 font-bold"
+                    className="absolute right-4 ml-16"
                     onClick={() => remove(__id)}
                     style={{ color: text }}
                   >

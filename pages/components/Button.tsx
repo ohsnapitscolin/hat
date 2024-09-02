@@ -20,7 +20,7 @@ const Button = (props: PropTypes) => {
   return (
     <button
       {...internalProps}
-      className={`border rounded-xl p-3 transition-all ${props.className}`}
+      className={`border rounded px-5 p-2 transition-all ${props.className}`}
       style={{
         color: isAlt ? backgroundColor : color,
         backgroundColor: isAlt ? color : "transparent",

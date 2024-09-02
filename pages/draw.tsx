@@ -1,19 +1,19 @@
-import { useCollection, useQuery, useQueue, useSquid } from "@squidcloud/react";
+import {
+  useCollection,
+  useDoc,
+  useQuery,
+  useSquid,
+} from "@squidcloud/react";
 import Button from "@/pages/components/Button";
 import useWindowSize from "react-use/lib/useWindowSize";
 import Confetti from "react-confetti";
 
 const Draw = () => {
   const squid = useSquid();
-  const { data: message } = useQueue<{
-    text: string;
-    bg1: string;
-    bg2: string;
-    name: string;
-    location: string;
-  }>(squid.queue("messages"));
-  const collection = useCollection("hat");
-  const { data, loading } = useQuery(collection.query());
+  const hatCollection = useCollection("hat");
+  const pickCollection = useCollection("picks");
+  const { data, loading } = useQuery(hatCollection.query());
+  const { data: pick } = useDoc(pickCollection.doc("pick"));
 
   const { width, height } = useWindowSize();
 
@@ -21,9 +21,9 @@ const Draw = () => {
     void squid.executeFunction("drawFromHat");
   };
 
-  const text = message?.text || "#000000";
-  const bg1 = message?.bg1 || "#ffffff";
-  const bg2 = message?.bg2 || "#ffffff";
+  const text = pick?.text || "#000000";
+  const bg1 = pick?.bg1 || "#ffffff";
+  const bg2 = pick?.bg2 || "#ffffff";
 
   return (
     <div
@@ -32,9 +32,9 @@ const Draw = () => {
         background: `linear-gradient(to bottom, ${bg1}, ${bg2})`,
       }}
     >
-      {!!message && (
-        <span className={"text-8xl"} style={{ color: text }}>
-          {message?.location}
+      {!!pick && (
+        <span className={"text-6xl"} style={{ color: text }}>
+          {pick?.location}
         </span>
       )}
       {!!data.length && !loading && (
@@ -50,7 +50,7 @@ const Draw = () => {
           <span style={{ color: text }}>Remaining: {data.length}</span>
         </>
       )}
-      {!data.length && message && <Confetti width={width} height={height} />}
+      {!data.length && pick && <Confetti width={width} height={height} />}
     </div>
   );
 };
