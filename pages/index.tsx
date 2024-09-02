@@ -39,7 +39,7 @@ const Home = () => {
       >
         <input
           className={
-            "w-[320px text-center px-4 mb-1 border-b bg-transparent outline-none border-black"
+            "w-[320px] text-center px-4 mb-1 border-b bg-transparent outline-none border-black"
           }
           {...register("name")}
         />
