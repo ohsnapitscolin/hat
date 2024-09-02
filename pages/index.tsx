@@ -1,13 +1,7 @@
-import Image from "next/image";
-import { Inter } from "next/font/google";
-import { useCollection, useQuery } from "@squidcloud/react";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
-import Router, { useRouter } from "next/router";
-import { NextPageContext } from "next";
+import { useRouter } from "next/router";
 import Button from "@/pages/components/Button";
-
-const inter = Inter({ subsets: ["latin"] });
 
 type FormData = {
   name: string;
@@ -25,7 +19,7 @@ const Home = () => {
     } else {
       setMounted(true);
     }
-  }, []);
+  }, [router]);
 
   const onSubmit = (data: FormData) => {
     const { name } = data;
@@ -45,7 +39,7 @@ const Home = () => {
       >
         <input
           className={
-            "h-16 text-4xl text-center px-4 mb-1 border-b-2 bg-transparent outline-none border-black"
+            "max-w-[80%] h-16 text-4xl text-center px-4 mb-1 border-b-2 bg-transparent outline-none border-black"
           }
           {...register("name")}
         />

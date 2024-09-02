@@ -1,10 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useRouter } from "next/router";
-import { NextPageContext } from "next";
 import { Controller, useForm } from "react-hook-form";
-import { useCollection, useQuery, useQueue, useSquid } from "@squidcloud/react";
-import { remove } from "@jridgewell/set-array";
-import { HexColorPicker } from "react-colorful";
+import { useCollection, useQuery } from "@squidcloud/react";
 import ColorPicker from "@/pages/components/ColorPicker";
 import Button from "@/pages/components/Button";
 
@@ -45,7 +42,7 @@ const Hat = ({ name }: PropTypes) => {
     if (!name) {
       void router.replace("/");
     }
-  }, [name]);
+  }, [name, router]);
 
   return (
     <div
@@ -65,7 +62,7 @@ const Hat = ({ name }: PropTypes) => {
           >
             <input
               className={
-                "h-16 text-4xl text-center px-4 mb-1 border-b-2 bg-transparent outline-none"
+                "max-w-[80%] h-16 text-4xl text-center px-4 mb-1 border-b-2 bg-transparent outline-none"
               }
               style={{ color: colors[0], borderColor: colors[0] }}
               {...register("location")}
@@ -78,33 +75,24 @@ const Hat = ({ name }: PropTypes) => {
               <Controller
                 control={control}
                 name="text"
-                render={({ field: { onChange, value, ref } }) => (
-                  <ColorPicker
-                    color={value}
-                    onChange={onChange} // send value to hook form
-                  />
+                render={({ field: { onChange, value } }) => (
+                  <ColorPicker color={value} onChange={onChange} />
                 )}
                 defaultValue={"#000000"}
               />
               <Controller
                 control={control}
                 name="bg1"
-                render={({ field: { onChange, value, ref } }) => (
-                  <ColorPicker
-                    color={value}
-                    onChange={onChange} // send value to hook form
-                  />
+                render={({ field: { onChange, value } }) => (
+                  <ColorPicker color={value} onChange={onChange} />
                 )}
                 defaultValue={"#ffffff"}
               />
               <Controller
                 control={control}
                 name="bg2"
-                render={({ field: { onChange, value, ref } }) => (
-                  <ColorPicker
-                    color={value}
-                    onChange={onChange} // send value to hook form
-                  />
+                render={({ field: { onChange, value } }) => (
+                  <ColorPicker color={value} onChange={onChange} />
                 )}
                 defaultValue={"#ffffff"}
               />
