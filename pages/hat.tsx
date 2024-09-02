@@ -4,7 +4,7 @@ import { Controller, useForm } from "react-hook-form";
 import { useCollection, useQuery } from "@squidcloud/react";
 import ColorPicker from "@/pages/components/ColorPicker";
 import Button from "@/pages/components/Button";
-import { getRandomColor } from "@/pages/utils";
+import { getRandomColor } from "@/utils";
 
 type PropTypes = {
   name: string;
