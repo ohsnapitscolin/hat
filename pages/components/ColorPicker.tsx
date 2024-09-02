@@ -16,6 +16,9 @@ const ColorPicker = ({ color, onChange }: PropTypes) => {
         isOpen={open}
         onRequestClose={() => setOpen(false)}
         style={{
+          overlay: {
+            backgroundColor: "rgba(0, 0, 0, 0)",
+          },
           content: {
             top: "50%",
             left: "50%",
